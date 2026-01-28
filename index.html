@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tapan Khandelwal | AI/ML Engineer Portfolio</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-text">INITIALIZING<span class="loader-dots"></span></div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <canvas id="particlesCanvas"></canvas>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#home" class="logo">
+                <span class="logo-text">TK</span>
+                <div class="logo-glow"></div>
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link"><span class="link-text">Home</span></a>
+                <a href="#about" class="nav-link"><span class="link-text">About</span></a>
+                <a href="#experience" class="nav-link"><span class="link-text">Experience</span></a>
+                <a href="#projects" class="nav-link"><span class="link-text">Projects</span></a>
+                <a href="#certificates" class="nav-link"><span class="link-text">Certificates</span></a>
+                <a href="#skills" class="nav-link"><span class="link-text">Skills</span></a>
+                <a href="#contact" class="nav-link"><span class="link-text">Contact</span></a>
+            </div>
+            <div class="nav-actions">
+                <button class="menu-toggle" id="menuToggle">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="greeting animate-text">
+                        <span class="greeting-text">Hello, I'm</span>
+                        <div class="greeting-line"></div>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="title-line animate-title">TAPAN</span>
+                        <span class="title-line animate-title delay-1">KHANDELWAL</span>
+                    </h1>
+                    <h2 class="hero-subtitle">
+                        <span class="typing-text"></span>
+                        <span class="cursor"></span>
+                    </h2>
+                    <p class="hero-description">
+                        Building intelligent AI solutions with Machine Learning, Deep Learning, NLP, and Generative AI.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn primary-btn">
+                            <span class="btn-text">View Projects</span>
+                            <div class="btn-glow"></div>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#contact" class="btn secondary-btn">
+                            <span class="btn-text">Contact Me</span>
+                            <div class="btn-glow"></div>
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number" data-count="2">0</div>
+                            <div class="stat-label">Internships</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" data-count="8">0</div>
+                            <div class="stat-label">Projects</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" data-count="15">0</div>
+                            <div class="stat-label">Technologies</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="ai-animation">
+                        <div class="neural-network">
+                            <div class="node node-1"></div>
+                            <div class="node node-2"></div>
+                            <div class="node node-3"></div>
+                            <div class="node node-4"></div>
+                            <div class="node node-5"></div>
+                            <div class="connection"></div>
+                            <div class="connection"></div>
+                            <div class="connection"></div>
+                            <div class="connection"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <span class="scroll-text">Scroll Down</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">About</span>
+                    <span class="title-highlight">Me</span>
+                </h2>
+                <div class="section-subtitle">AI/ML Engineer & Developer</div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-bio">
+                        <h3>Building Intelligent Solutions</h3>
+                        <p>Results-driven AI/ML Engineer with expertise in machine learning, deep learning, natural language processing (NLP), and large language models (LLMs). Skilled in developing AI applications, building predictive models, and deploying advanced AI-driven solutions.</p>
+                        <p>Experienced in working with Generative AI technologies, including model fine-tuning and optimization. Demonstrates strong commitment to leveraging AI for innovative solutions across various domains.</p>
+                    </div>
+                    <div class="about-info">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Education</h4>
+                                <p>B.Tech Computer Science (AI/ML Specialization)</p>
+                                <p class="info-detail">Jagannath University, Jaipur</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Location</h4>
+                                <p>Jaipur, Rajasthan</p>
+                                <p class="info-detail">India</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-info-small">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>khandelwaltapan7@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 9982866695</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="tech-bubbles">
+                        <div class="bubble python">Python</div>
+                        <div class="bubble ml">ML</div>
+                        <div class="bubble dl">DL</div>
+                        <div class="bubble nlp">NLP</div>
+                        <div class="bubble ai">AI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">Professional</span>
+                    <span class="title-highlight">Experience</span>
+                </h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-line"></div>
+                <div class="timeline-item left">
+                    <div class="timeline-dot">
+                        <div class="dot-glow"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">June 2025 - Present</div>
+                        <h3 class="timeline-title">Technical Project Executive Intern</h3>
+                        <h4 class="timeline-company">Cognus Technology, Jaipur</h4>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>Designed and deployed AI-driven solutions improving client operational efficiency</li>
+                                <li>Utilized advanced algorithms to automate complex data workflows</li>
+                                <li>Developed adaptive AI models for real-time decision-making</li>
+                                <li>Continuously optimized business processes through machine learning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-dot">
+                        <div class="dot-glow"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">July 2024 - Aug 2024</div>
+                        <h3 class="timeline-title">Machine Learning Developer Intern</h3>
+                        <h4 class="timeline-company">Igeeks Technology, Bangalore</h4>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>Developed and deployed machine learning models with Python</li>
+                                <li>Worked with R&D Team on Machine Learning projects</li>
+                                <li>Integrated AI models into cloud-based platforms</li>
+                                <li>Optimized decision-making processes with real-world datasets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">Featured</span>
+                    <span class="title-highlight">Projects</span>
+                </h2>
+                <div class="section-subtitle">Real-world AI Applications & Web Solutions</div>
+            </div>
+            <div class="projects-grid">
+                <!-- Live Web Apps -->
+                <a href="https://ai-powered-sentiment-analysis-7q5k.onrender.com/" target="_blank" class="project-card live">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">LIVE</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">AI Sentiment Analysis</h3>
+                    <p class="project-description">
+                        Real-time sentiment analysis platform for customer interactions with advanced AI algorithms.
+                    </p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>NLP</span>
+                        <span>AI</span>
+                        <span>Render</span>
+                    </div>
+                    <div class="project-link">
+                        <span>Visit Live App</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+
+                <a href="https://ai-based-student-chatbot.onrender.com/" target="_blank" class="project-card live">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">LIVE</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">AI Student Chatbot</h3>
+                    <p class="project-description">
+                        Intelligent chatbot for student query assistance using machine learning and NLP.
+                    </p>
+                    <div class="project-tech">
+                        <span>NLP</span>
+                        <span>Chatbot</span>
+                        <span>ML</span>
+                        <span>Python</span>
+                    </div>
+                    <div class="project-link">
+                        <span>Visit Live App</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+
+                <!-- GitHub Projects -->
+                <a href="https://github.com/KhandelwalTapan7/NutriAi" target="_blank" class="project-card github">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">GITHUB</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">NutriAI</h3>
+                    <p class="project-description">
+                        AI-powered nutrition analysis and meal planning system for personalized diet recommendations.
+                    </p>
+                    <div class="project-tech">
+                        <span>AI</span>
+                        <span>Python</span>
+                        <span>ML</span>
+                        <span>Health</span>
+                    </div>
+                    <div class="project-link">
+                        <span>View on GitHub</span>
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+
+                <a href="https://github.com/KhandelwalTapan7/AirQualityProject" target="_blank" class="project-card github">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">GITHUB</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Air Quality Prediction</h3>
+                    <p class="project-description">
+                        Machine learning model for predicting air quality index across different regions in India.
+                    </p>
+                    <div class="project-tech">
+                        <span>ML</span>
+                        <span>Python</span>
+                        <span>Data Science</span>
+                        <span>Prediction</span>
+                    </div>
+                    <div class="project-link">
+                        <span>View on GitHub</span>
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+
+                <!-- Wix Websites -->
+                <a href="https://khandelwaltapan7.wixsite.com/the-writing-room-1" target="_blank" class="project-card website">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">WEBSITE</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">The Writing Room</h3>
+                    <p class="project-description">
+                        A creative writing platform and community for writers to share and collaborate on projects.
+                    </p>
+                    <div class="project-tech">
+                        <span>Wix</span>
+                        <span>Web Design</span>
+                        <span>Content</span>
+                        <span>Community</span>
+                    </div>
+                    <div class="project-link">
+                        <span>Visit Website</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+
+                <a href="https://khandelwaltapan7.wixsite.com/bhukkad" target="_blank" class="project-card website">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="project-badge">
+                            <span class="badge-text">WEBSITE</span>
+                            <div class="badge-glow"></div>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Bhukkad Restaurant</h3>
+                    <p class="project-description">
+                        Restaurant website with menu, ordering system, and reservation features built with Wix.
+                    </p>
+                    <div class="project-tech">
+                        <span>Wix</span>
+                        <span>E-commerce</span>
+                        <span>Food</span>
+                        <span>Restaurant</span>
+                    </div>
+                    <div class="project-link">
+                        <span>Visit Website</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="project-glow"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="certificates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">Internship</span>
+                    <span class="title-highlight">Certificates</span>
+                </h2>
+                <div class="section-subtitle">Click on certificates to view/download</div>
+            </div>
+            <div class="certificates-grid">
+                <!-- Cognus Certificate -->
+                <div class="certificate-card" data-certificate="cognus">
+                    <div class="certificate-preview">
+                        <div class="certificate-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="certificate-glow"></div>
+                    </div>
+                    <div class="certificate-content">
+                        <h3>Technical Project Executive</h3>
+                        <p class="certificate-company">Cognus Technology</p>
+                        <div class="certificate-details">
+                            <div class="detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Jun 2025 - Dec 2025</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Jaipur</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-clock"></i>
+                                <span>6 Months</span>
+                            </div>
+                        </div>
+                        <p class="certificate-desc">
+                            Successfully completed internship programme exposed to different project verticals. Recognized for being punctual, hardworking, and inquisitive.
+                        </p>
+                        <button class="btn view-certificate-btn" data-pdf="https://drive.google.com/file/d/your-cognus-pdf-link/view">
+                            <span>View Certificate</span>
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Igeeks Certificate -->
+                <div class="certificate-card" data-certificate="igeek">
+                    <div class="certificate-preview">
+                        <div class="certificate-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="certificate-glow"></div>
+                    </div>
+                    <div class="certificate-content">
+                        <h3>Machine Learning Developer</h3>
+                        <p class="certificate-company">IGEEKS TECHNOLOGY</p>
+                        <div class="certificate-details">
+                            <div class="detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Jul 2024 - Aug 2024</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bangalore</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-clock"></i>
+                                <span>1 Month</span>
+                            </div>
+                        </div>
+                        <p class="certificate-desc">
+                            Worked with R&D Team in Machine Learning with Python. Recognized for consistent progress and technical skills.
+                        </p>
+                        <button class="btn view-certificate-btn" data-pdf="https://drive.google.com/file/d/your-igeek-pdf-link/view">
+                            <span>View Certificate</span>
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">Technical</span>
+                    <span class="title-highlight">Skills</span>
+                </h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Programming</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI/ML</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Generative AI</span>
+                        <span class="skill-tag">LLM</span>
+                        <span class="skill-tag">Computer Vision</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-tools"></i>
+                        <h3>Frameworks</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Hugging Face</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Web & Tools</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Wix</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-text">Get In</span>
+                    <span class="title-highlight">Touch</span>
+                </h2>
+                <div class="section-subtitle">Let's discuss AI projects and opportunities</div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <a href="mailto:khandelwaltapan7@gmail.com">khandelwaltapan7@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <a href="tel:+919982866695">+91 9982866695</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Jaipur, Rajasthan, India</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/KhandelwalTapan7" target="_blank" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/tapan-khandelwal" target="_blank" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:khandelwaltapan7@gmail.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject" required>
+                        <div class="input-line"></div>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                        <div class="input-line"></div>
+                    </div>
+                    <button type="submit" class="btn primary-btn submit-btn">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>TK</span>
+                </div>
+                <p class="footer-text">
+                    "The best way to predict the future is to invent it." — Alan Kay
+                </p>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#certificates">Certificates</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Tapan Khandelwal. All rights reserved.</p>
+                    <p>Built with ❤️ & AI</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+        <div class="arrow-glow"></div>
+    </button>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Certificate</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="certificate-viewer">
+                    <div class="pdf-viewer" id="pdfViewer">
+                        <!-- PDF will be embedded here -->
+                    </div>
+                    <div class="certificate-actions">
+                        <a href="#" class="btn primary-btn" id="downloadBtn" target="_blank">
+                            <i class="fas fa-download"></i>
+                            Download PDF
+                        </a>
+                        <a href="#" class="btn secondary-btn" id="viewOriginalBtn" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            View Original
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>
