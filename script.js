@@ -1,330 +1,166 @@
-// Loading Screen
-window.addEventListener('load', () => {
-    const loadingScreen = document.querySelector('.loading-screen');
-    
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        loadingScreen.style.visibility = 'hidden';
-        
-        setTimeout(() => {
-            initAnimations();
-            initTypingEffect();
-            initCounters();
-        }, 500);
-    }, 1500);
-});
+/* ================================================================
+   TAPAN KHANDELWAL — PORTFOLIO SCRIPT
+   Companion to index.html  |  Theme: Deep-Space Indigo
+   ================================================================ */
 
-// Navigation
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.querySelector('.nav-links');
+/* ── STARFIELD CANVAS BACKGROUND ── */
+(function () {
+  const c = document.getElementById('starfield');
+  if (!c) return;
 
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    navLinks.classList.toggle('active');
-});
+  const ctx = c.getContext('2d');
+  let stars = [];
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        navLinks.classList.remove('active');
+  function resize() {
+    c.width = innerWidth;
+    c.height = innerHeight;
+  }
+
+  function init() {
+    stars = [];
+    for (let i = 0; i < 160; i++) {
+      stars.push({
+        x: Math.random() * c.width,
+        y: Math.random() * c.height,
+        r: Math.random() * 1.4 + 0.2,
+        a: Math.random(),
+        speed: Math.random() * 0.004 + 0.001
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    stars.forEach(s => {
+      s.a += s.speed;
+      ctx.globalAlpha = 0.3 + 0.5 * Math.abs(Math.sin(s.a));
+      ctx.fillStyle = '#818cf8';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
     });
-});
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
 
-// Back to Top
-const backToTop = document.getElementById('backToTop');
+  window.addEventListener('resize', () => {
+    resize();
+    init();
+  });
 
+  resize();
+  init();
+  draw();
+})();
+
+/* ── NAV SCROLL STATE (sticky shadow + back-to-top visibility) ── */
 window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTop.classList.add('visible');
+  const navbar = document.getElementById('navbar');
+  const btt = document.getElementById('btt');
+  if (navbar) navbar.classList.toggle('scrolled', scrollY > 60);
+  if (btt) btt.classList.toggle('visible', scrollY > 400);
+});
+
+/* ── MOBILE MENU TOGGLE ── */
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu) menu.classList.toggle('open');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu) menu.classList.remove('open');
+}
+
+/* ── HERO ROLE TYPEWRITER ── */
+(function () {
+  const roles = [
+    'AI/ML Engineer',
+    'Deep Learning Developer',
+    'NLP Practitioner',
+    'Generative AI Builder',
+    'Python Enthusiast'
+  ];
+
+  const el = document.getElementById('typedRole');
+  if (!el) return;
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  function tick() {
+    const role = roles[roleIndex];
+
+    if (!deleting) {
+      charIndex++;
+      el.textContent = role.slice(0, charIndex) + '|';
+      if (charIndex === role.length) {
+        deleting = true;
+        setTimeout(tick, 1800);
+        return;
+      }
     } else {
-        backToTop.classList.remove('visible');
+      charIndex--;
+      el.textContent = role.slice(0, charIndex) + '|';
+      if (charIndex === 0) {
+        deleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+      }
     }
-});
 
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
+    setTimeout(tick, deleting ? 60 : 90);
+  }
 
-// Smooth Scroll for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            const offsetTop = targetElement.offsetTop - 80;
-            
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
+  tick();
+})();
 
-// Typing Effect
-function initTypingEffect() {
-    const typingText = document.querySelector('.typing-text');
-    const texts = [
-        'AI/ML Engineer',
-        'Deep Learning Specialist',
-        'NLP Developer',
-        'Generative AI Expert',
-        'Python Developer'
-    ];
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    
-    function type() {
-        const currentText = texts[textIndex];
-        
-        if (isDeleting) {
-            typingText.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-            typingSpeed = 50;
-        } else {
-            typingText.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-            typingSpeed = 100;
-        }
-        
-        if (!isDeleting && charIndex === currentText.length) {
-            typingSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            typingSpeed = 500;
-        }
-        
-        setTimeout(type, typingSpeed);
+/* ── HERO STAT COUNT-UP ── */
+function countUp(id, target, duration) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  let start = 0;
+  const step = target / (duration / 16);
+
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) {
+      el.textContent = target;
+      clearInterval(timer);
+      return;
     }
-    
-    setTimeout(type, 1000);
+    el.textContent = Math.floor(start);
+  }, 16);
 }
 
-// Animated Counters
-function initCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'));
-        const increment = target / 100;
-        let current = 0;
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            clearInterval(timer);
-                            current = target;
-                        }
-                        counter.textContent = Math.floor(current);
-                    }, 20);
-                    
-                    observer.unobserve(counter);
-                }
-            });
-        });
-        
-        observer.observe(counter);
+setTimeout(() => {
+  countUp('s1', 2, 1000);   // Internships
+  countUp('s2', 8, 1200);   // Projects
+  countUp('s3', 34, 1400);  // Repositories
+}, 600);
+
+/* ── SCROLL-REVEAL ANIMATIONS ── */
+const revealObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
+  },
+  { threshold: 0.12 }
+);
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── CONTACT FORM SUBMIT (demo — shows toast, no backend wired) ── */
+function handleSubmit(e) {
+  e.preventDefault();
+
+  const toast = document.getElementById('toast');
+  if (toast) {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  e.target.reset();
 }
-
-// Form Submission
-const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    // Show success message
-    alert('Thank you for your message! I will get back to you soon.');
-    contactForm.reset();
-});
-
-// Certificate Modal - Fixed to show actual PDFs
-const certificateModal = document.getElementById('certificateModal');
-const viewCertificateBtns = document.querySelectorAll('.view-certificate-btn');
-const closeModalBtn = document.querySelector('.close-modal');
-const modalBody = document.getElementById('modalBody');
-const modalTitle = document.getElementById('modalTitle');
-const pdfViewer = document.getElementById('pdfViewer');
-const downloadBtn = document.getElementById('downloadBtn');
-const viewOriginalBtn = document.getElementById('viewOriginalBtn');
-
-// Certificate Data with actual PDF links
-const certificates = {
-    cognus: {
-        title: "Internship Certificate - Cognus Technology",
-        pdfUrl: "assets/certificates/cognus-certificate.pdf", // Replace with actual path
-        downloadUrl: "assets/certificates/cognus-certificate.pdf",
-        originalUrl: "assets/certificates/cognus-certificate.pdf"
-    },
-    igeek: {
-        title: "Internship Certificate - Igeeks Technology",
-        pdfUrl: "assets/certificates/igeek-certificate.pdf", // Replace with actual path
-        downloadUrl: "assets/certificates/igeek-certificate.pdf",
-        originalUrl: "assets/certificates/igeek-certificate.pdf"
-    }
-};
-
-// Open Certificate Modal with PDF Viewer
-viewCertificateBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const certType = btn.closest('.certificate-card').getAttribute('data-certificate');
-        const certificate = certificates[certType];
-        
-        if (certificate) {
-            modalTitle.textContent = certificate.title;
-            
-            // Create PDF viewer
-            pdfViewer.innerHTML = `
-                <iframe src="${certificate.pdfUrl}" frameborder="0"></iframe>
-                <div class="pdf-placeholder" style="display: none;">
-                    <i class="fas fa-file-pdf"></i>
-                    <p>PDF Preview Loading...</p>
-                </div>
-            `;
-            
-            // Set download and view buttons
-            downloadBtn.href = certificate.downloadUrl;
-            downloadBtn.download = `${certType}-certificate.pdf`;
-            viewOriginalBtn.href = certificate.originalUrl;
-            
-            certificateModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    });
-});
-
-// Also make entire certificate card clickable
-document.querySelectorAll('.certificate-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-        if (!e.target.closest('.view-certificate-btn')) {
-            const certType = card.getAttribute('data-certificate');
-            const certificate = certificates[certType];
-            
-            if (certificate) {
-                modalTitle.textContent = certificate.title;
-                
-                pdfViewer.innerHTML = `
-                    <iframe src="${certificate.pdfUrl}" frameborder="0"></iframe>
-                    <div class="pdf-placeholder" style="display: none;">
-                        <i class="fas fa-file-pdf"></i>
-                        <p>PDF Preview Loading...</p>
-                    </div>
-                `;
-                
-                downloadBtn.href = certificate.downloadUrl;
-                downloadBtn.download = `${certType}-certificate.pdf`;
-                viewOriginalBtn.href = certificate.originalUrl;
-                
-                certificateModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    });
-});
-
-// Close Modal Functions
-function closeModal() {
-    certificateModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-closeModalBtn.addEventListener('click', closeModal);
-
-certificateModal.addEventListener('click', (e) => {
-    if (e.target === certificateModal) {
-        closeModal();
-    }
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && certificateModal.classList.contains('active')) {
-        closeModal();
-    }
-});
-
-// Project Card Hover Effects
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Initialize animations
-function initAnimations() {
-    // Add animation classes on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-    
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
-    
-    document.querySelectorAll('.project-card, .certificate-card, .skill-category, .contact-card').forEach(card => {
-        observer.observe(card);
-    });
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initCounters();
-    initTypingEffect();
-    initAnimations();
-    
-    // Add certificate placeholder styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .certificate-card {
-            cursor: pointer;
-        }
-        
-        .certificate-card:hover .certificate-icon {
-            animation: bounce 0.5s ease;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-    `;
-    document.head.appendChild(style);
-});

@@ -1,718 +1,1349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tapan Khandelwal | AI/ML Engineer Portfolio</title>
-    
-    <!-- Fonts & Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapan Khandelwal | Python Developer & AI/ML Engineer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:        #050816;
+  --bg-2:      #090d1f;
+  --surface:   #0d1230;
+  --border:    rgba(99,102,241,0.18);
+  --indigo:    #6366f1;
+  --indigo-lt: #818cf8;
+  --cyan:      #22d3ee;
+  --green:     #34d399;
+  --amber:     #fbbf24;
+  --text:      #e2e8f0;
+  --muted:     #94a3b8;
+  --code:      'JetBrains Mono', monospace;
+  --display:   'Syne', sans-serif;
+  --body:      'Space Grotesk', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--indigo); border-radius: 2px; }
+
+/* ── GRID NOISE BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── CANVAS ── */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── LAYOUT ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+section { padding: 100px 0; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  background: rgba(5,8,22,0.85);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .3s;
+}
+nav.scrolled { box-shadow: 0 4px 40px rgba(99,102,241,0.08); }
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--code);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--indigo-lt);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+.nav-logo span { color: var(--cyan); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: var(--indigo);
+  transform: scaleX(0);
+  transition: transform .2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 1px; transition: .3s; }
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .3s;
+}
+.mobile-menu.open { max-height: 300px; }
+.mobile-menu a {
+  display: block;
+  padding: 14px 24px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .9rem;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s, background .2s;
+}
+.mobile-menu a:hover { color: var(--text); background: rgba(99,102,241,0.06); }
+@media(max-width: 720px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  align-items: center;
+}
+@media(max-width: 820px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--code);
+  font-size: .8rem;
+  color: var(--indigo-lt);
+  margin-bottom: 20px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--indigo);
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.hero-name .highlight {
+  background: linear-gradient(135deg, var(--indigo-lt), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-role {
+  font-family: var(--code);
+  font-size: 1rem;
+  color: var(--cyan);
+  margin: 18px 0 22px;
+  min-height: 1.5em;
+}
+.hero-bio {
+  color: var(--muted);
+  max-width: 520px;
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 36px;
+}
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 6px;
+  font-family: var(--body);
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s;
+  border: none;
+}
+.btn-primary {
+  background: var(--indigo);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--indigo-lt); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.35); }
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--indigo); color: var(--indigo-lt); transform: translateY(-1px); }
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+.stat-num {
+  font-family: var(--display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.stat-num span { color: var(--indigo-lt); }
+.stat-label { font-size: .78rem; color: var(--muted); margin-top: 4px; letter-spacing: .04em; text-transform: uppercase; }
+
+/* ── HERO RIGHT — code terminal ── */
+.terminal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--code);
+  font-size: .8rem;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.r { background: #ff5f57; }
+.dot.y { background: #febc2e; }
+.dot.g { background: #28c840; }
+.terminal-filename { margin-left: 8px; color: var(--muted); font-size: .75rem; }
+.terminal-body { padding: 20px; line-height: 2; }
+.t-comment { color: #4c5a7a; }
+.t-key { color: var(--cyan); }
+.t-string { color: var(--green); }
+.t-num { color: var(--amber); }
+.t-bracket { color: var(--muted); }
+
+/* ── SECTION HEADERS ── */
+.sec-label {
+  font-family: var(--code);
+  font-size: .75rem;
+  color: var(--indigo-lt);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.sec-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--indigo); }
+.sec-title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 60px;
+}
+.sec-title em { font-style: normal; color: var(--indigo-lt); }
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+@media(max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+.about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+.about-text p strong { color: var(--text); }
+.about-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.chip {
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-family: var(--code);
+  font-size: .75rem;
+  background: rgba(99,102,241,.1);
+  border: 1px solid rgba(99,102,241,.25);
+  color: var(--indigo-lt);
+}
+.about-info-list { display: flex; flex-direction: column; gap: 18px; }
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color .2s;
+}
+.info-row:hover { border-color: rgba(99,102,241,.4); }
+.info-icon {
+  width: 36px; height: 36px;
+  border-radius: 6px;
+  background: rgba(99,102,241,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--indigo-lt);
+  flex-shrink: 0;
+  font-size: .9rem;
+}
+.info-body h5 { color: var(--text); font-size: .9rem; font-weight: 600; margin-bottom: 2px; }
+.info-body p { color: var(--muted); font-size: .83rem; }
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--bg-2); }
+.timeline { position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--indigo), transparent);
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.tl-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--indigo);
+  margin-top: 6px;
+  box-shadow: 0 0 12px rgba(99,102,241,.6);
+  position: relative;
+  left: 14px;
+  flex-shrink: 0;
+}
+.tl-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  transition: border-color .2s, transform .2s;
+}
+.tl-card:hover { border-color: rgba(99,102,241,.4); transform: translateX(4px); }
+.tl-date {
+  font-family: var(--code);
+  font-size: .73rem;
+  color: var(--indigo-lt);
+  margin-bottom: 8px;
+  letter-spacing: .04em;
+}
+.tl-role {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.tl-company {
+  font-size: .88rem;
+  color: var(--cyan);
+  margin-bottom: 14px;
+}
+.tl-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.tl-card ul li {
+  color: var(--muted);
+  font-size: .88rem;
+  padding-left: 14px;
+  position: relative;
+}
+.tl-card ul li::before { content: '▸'; position: absolute; left: 0; color: var(--indigo); }
+
+/* ── PROJECTS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 20px;
+}
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--indigo), var(--cyan));
+  transform: scaleX(0);
+  transition: transform .25s;
+  transform-origin: left;
+}
+.project-card:hover { border-color: rgba(99,102,241,.4); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+.project-card:hover::before { transform: scaleX(1); }
+.proj-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.proj-icon {
+  width: 40px; height: 40px;
+  background: rgba(99,102,241,.1);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  color: var(--indigo-lt);
+}
+.proj-badge {
+  font-family: var(--code);
+  font-size: .65rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.badge-live { background: rgba(52,211,153,.12); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
+.badge-gh { background: rgba(99,102,241,.12); color: var(--indigo-lt); border: 1px solid rgba(99,102,241,.25); }
+.badge-web { background: rgba(34,211,238,.1); color: var(--cyan); border: 1px solid rgba(34,211,238,.25); }
+.proj-title { font-size: 1rem; font-weight: 700; color: #fff; }
+.proj-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; flex: 1; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.proj-tag {
+  font-family: var(--code);
+  font-size: .7rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--muted);
+}
+.proj-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .82rem;
+  color: var(--indigo-lt);
+  margin-top: 4px;
+}
+
+/* ── SKILLS ── */
+#skills { background: var(--bg-2); }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+.skill-cat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  transition: border-color .2s;
+}
+.skill-cat:hover { border-color: rgba(99,102,241,.35); }
+.skill-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--text);
+}
+.skill-cat-header i { color: var(--indigo-lt); font-size: 1rem; }
+.skill-tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.skill-tag {
+  font-family: var(--code);
+  font-size: .72rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(99,102,241,.08);
+  border: 1px solid rgba(99,102,241,.18);
+  color: var(--indigo-lt);
+  transition: background .2s, border-color .2s;
+}
+.skill-tag:hover { background: rgba(99,102,241,.18); border-color: rgba(99,102,241,.4); }
+
+/* ── CERTIFICATES ── */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  transition: border-color .2s, transform .2s;
+}
+.cert-card:hover { border-color: rgba(99,102,241,.4); transform: translateY(-2px); }
+.cert-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(99,102,241,.2), rgba(34,211,238,.1));
+  border: 1px solid rgba(99,102,241,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: var(--indigo-lt);
+  margin-bottom: 16px;
+}
+.cert-role { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.cert-company { font-size: .85rem; color: var(--cyan); margin-bottom: 14px; }
+.cert-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; }
+.cert-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--code);
+  font-size: .73rem;
+  color: var(--muted);
+}
+.cert-meta-item i { color: var(--indigo-lt); }
+.cert-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+
+/* ── CONTACT ── */
+#contact { background: var(--bg-2); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+@media(max-width: 720px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-left h3 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.contact-left p { color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+.contact-items { display: flex; flex-direction: column; gap: 14px; }
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: .88rem;
+  transition: border-color .2s, color .2s;
+}
+.contact-item:hover { border-color: rgba(99,102,241,.4); color: var(--text); }
+.contact-item i { width: 20px; color: var(--indigo-lt); text-align: center; }
+.social-row { display: flex; gap: 12px; margin-top: 24px; }
+.social-btn {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all .2s;
+}
+.social-btn:hover { border-color: var(--indigo); color: var(--indigo-lt); background: rgba(99,102,241,.1); }
+/* form */
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-field label { font-size: .78rem; color: var(--muted); font-family: var(--code); letter-spacing: .04em; }
+.form-field input,
+.form-field textarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: .9rem;
+  outline: none;
+  transition: border-color .2s;
+  resize: vertical;
+}
+.form-field input:focus,
+.form-field textarea:focus { border-color: var(--indigo); }
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: rgba(148,163,184,.4); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: .82rem;
+  position: relative; z-index: 1;
+}
+footer a { color: var(--indigo-lt); text-decoration: none; }
+footer a:hover { color: var(--cyan); }
+
+/* ── BACK TO TOP ── */
+#btt {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--indigo);
+  border: none;
+  color: #fff;
+  font-size: .9rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, transform .2s;
+  z-index: 90;
+  display: flex; align-items: center; justify-content: center;
+}
+#btt.visible { opacity: 1; pointer-events: auto; }
+#btt:hover { transform: translateY(-2px); background: var(--indigo-lt); }
+
+/* ── REVEAL ANIM ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── CURSOR ── */
+.cursor-blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 80px; right: 28px;
+  background: var(--surface);
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: .85rem;
+  font-family: var(--code);
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .3s, transform .3s;
+  pointer-events: none;
+}
+#toast.show { opacity: 1; transform: none; }
+</style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-text">INITIALIZING<span class="loader-dots"></span></div>
+
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero"><span>&lt;</span>TK<span>/&gt;</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certificates">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#experience" onclick="closeMenu()">Experience</a>
+    <a href="#projects" onclick="closeMenu()">Projects</a>
+    <a href="#skills" onclick="closeMenu()">Skills</a>
+    <a href="#certificates" onclick="closeMenu()">Certificates</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="eyebrow">Hello, I'm Tapan</div>
+        <h1 class="hero-name">
+          TAPAN<br>
+          <span class="highlight">KHANDELWAL</span>
+        </h1>
+        <div class="hero-role" id="typedRole">_</div>
+        <p class="hero-bio">
+          Results-driven <strong>Python Developer</strong> with strong expertise in Machine Learning, Deep Learning, NLP, and Generative AI.
+          I build intelligent, production-grade systems that solve real problems — from predictive models to deployed AI applications.
+        </p>
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-primary"><i class="fas fa-code-branch"></i> View Projects</a>
+          <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Get in Touch</a>
+          <a href="https://github.com/KhandelwalTapan7" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
         </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num"><span id="s1">0</span>+</div>
+            <div class="stat-label">Internships</div>
+          </div>
+          <div>
+            <div class="stat-num"><span id="s2">0</span>+</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div>
+            <div class="stat-num"><span id="s3">0</span>+</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TERMINAL CARD -->
+      <div class="hero-right">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot r"></span>
+            <span class="dot y"></span>
+            <span class="dot g"></span>
+            <span class="terminal-filename">tapan.json</span>
+          </div>
+          <div class="terminal-body">
+            <div class="t-bracket">{</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-string">"Tapan Khandelwal"</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-string">"AI/ML Engineer"</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-string">"Jaipur, India"</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"education"</span>: <span class="t-string">"B.Tech CSE (AI/ML)"</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"university"</span>: <span class="t-string">"Jagannath Univ."</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"focus"</span>: <span class="t-bracket">[</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"Python Dev"</span>, <span class="t-string">"LLMs"</span>,</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"GenAI"</span>, <span class="t-string">"NLP"</span></div>
+            <div>&nbsp;&nbsp;<span class="t-bracket">]</span>,</div>
+            <div>&nbsp;&nbsp;<span class="t-key">"status"</span>: <span class="t-string">"Open to Python Dev roles"</span></div>
+            <div class="t-bracket">}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-label">01 — About</div>
+    <h2 class="sec-title">Who I <em>Am</em></h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a final-year <strong>B.Tech Computer Science (AI/ML)</strong> student at Jagannath University, Jaipur, with a strong foundation in Python development and a focus on building systems that learn, adapt, and solve real problems. I'm drawn to engineering work where software does more than execute instructions — it reasons over data and improves with use.</p>
+        <p>Over the past year I've completed <strong>two internships</strong> — as a Technical Project Executive at Cognus Technology and as a Machine Learning Developer at Igeeks Technology — where I designed, deployed, and optimized AI-driven solutions that improved operational efficiency for real clients.</p>
+        <p>I actively maintain a growing portfolio of projects on GitHub, ranging from live NLP applications to predictive ML models, and I'm currently seeking a <strong>Python Developer role</strong> where I can apply my engineering skills to production systems.</p>
+        <div class="about-chips">
+          <span class="chip">Python</span>
+          <span class="chip">TensorFlow</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">Hugging Face</span>
+          <span class="chip">LangChain</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip">Flask</span>
+          <span class="chip">FastAPI</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Git</span>
+        </div>
+      </div>
+      <div class="about-info-list">
+        <div class="info-row">
+          <div class="info-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="info-body">
+            <h5>Education</h5>
+            <p>B.Tech CSE — AI/ML Specialization<br>Jagannath University, Jaipur</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="info-body">
+            <h5>Location</h5>
+            <p>Jaipur, Rajasthan, India</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-body">
+            <h5>Email</h5>
+            <p>khandelwaltapan7@gmail.com</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div class="info-body">
+            <h5>Phone</h5>
+            <p>+91 99828 66695</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fab fa-github"></i></div>
+          <div class="info-body">
+            <h5>GitHub</h5>
+            <p><a href="https://github.com/KhandelwalTapan7" target="_blank" style="color:var(--indigo-lt)">KhandelwalTapan7</a></p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="info-body">
+            <h5>LinkedIn</h5>
+            <p><a href="https://www.linkedin.com/in/tapan-khandelwal-20664b249/" target="_blank" style="color:var(--indigo-lt)">tapan-khandelwal-20664b249</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-label">02 — Experience</div>
+    <h2 class="sec-title">Professional <em>Journey</em></h2>
+    <div class="timeline reveal">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-date">June 2025 – Present · Jaipur</div>
+          <div class="tl-role">Technical Project Executive Intern</div>
+          <div class="tl-company">Cognus Technology</div>
+          <ul>
+            <li>Designed and deployed AI-driven solutions that measurably improved client operational efficiency</li>
+            <li>Built adaptive ML models for real-time decision-making inside client workflows</li>
+            <li>Automated complex data pipelines using advanced ML algorithms, reducing manual effort</li>
+            <li>Continuously optimized business processes through iterative model improvement</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-date">July 2024 – August 2024 · Bangalore</div>
+          <div class="tl-role">Machine Learning Developer Intern</div>
+          <div class="tl-company">Igeeks Technology</div>
+          <ul>
+            <li>Developed and deployed ML models using Python within an R&D team environment</li>
+            <li>Integrated trained AI models into cloud-based platforms for production use</li>
+            <li>Worked with real-world datasets to optimize decision-making pipelines</li>
+            <li>Gained hands-on experience with model deployment lifecycle and MLOps basics</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-label">03 — Projects</div>
+    <h2 class="sec-title">What I've <em>Built</em></h2>
+    <div class="projects-grid reveal">
+
+      <a href="https://ai-powered-sentiment-analysis-7q5k.onrender.com/" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-chart-line"></i></div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-title">AI Sentiment Analysis</div>
+        <div class="proj-desc">Real-time sentiment analysis platform for customer interactions. Processes text with NLP models deployed on Render — fully live and accessible.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">NLP</span><span class="proj-tag">Flask</span><span class="proj-tag">Render</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Live App</div>
+      </a>
+
+      <a href="https://aurora-ai-deepfake-detector-cgfj.onrender.com/" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-shield-alt"></i></div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-title">Aurora — Deepfake Intelligence</div>
+        <div class="proj-desc">Deepfake detection platform powered by a custom-trained EfficientNet-B0 model achieving 95.27% validation accuracy across 3 classes (Real, AI-Generated, Deepfake). Includes live forensics, batch analysis, and detection analytics.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">PyTorch</span><span class="proj-tag">EfficientNet-B0</span><span class="proj-tag">OpenCV</span><span class="proj-tag">Flask</span><span class="proj-tag">Computer Vision</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Live App</div>
+      </a>
+
+      <a href="https://business-health-engine.onrender.com" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-heartbeat"></i></div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-title">Business Health Engine</div>
+        <div class="proj-desc">AI-powered business analytics platform that evaluates key operational and financial metrics to generate a real-time "health score," helping identify risk areas and growth opportunities.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">ML</span><span class="proj-tag">Data Analytics</span><span class="proj-tag">Flask</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Live App</div>
+      </a>
+
+      <a href="https://agentic-ai-recommender-system-1.onrender.com/" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-sitemap"></i></div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-title">Agentic AI Recommender System</div>
+        <div class="proj-desc">An autonomous, agent-based recommendation engine that reasons over user context and preferences to generate personalized suggestions, going beyond traditional collaborative filtering.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Agentic AI</span><span class="proj-tag">LLMs</span><span class="proj-tag">Python</span><span class="proj-tag">Recommender Systems</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Live App</div>
+      </a>
+
+      <a href="https://ai-based-student-chatbot.onrender.com/" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-robot"></i></div>
+          <span class="proj-badge badge-live">Live</span>
+        </div>
+        <div class="proj-title">AI Student Chatbot</div>
+        <div class="proj-desc">Intelligent chatbot for student query assistance using ML and NLP. Deployed and live — students can ask questions and get AI-powered answers.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">NLP</span><span class="proj-tag">Chatbot</span><span class="proj-tag">ML</span><span class="proj-tag">Python</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Live App</div>
+      </a>
+
+      <a href="https://github.com/KhandelwalTapan7/NutriAi" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-apple-alt"></i></div>
+          <span class="proj-badge badge-gh">GitHub</span>
+        </div>
+        <div class="proj-title">NutriAI</div>
+        <div class="proj-desc">AI-powered nutrition analysis and meal-planning system that generates personalized diet recommendations based on user health data.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">AI</span><span class="proj-tag">Python</span><span class="proj-tag">Health</span><span class="proj-tag">ML</span>
+        </div>
+        <div class="proj-link"><i class="fab fa-github"></i> View on GitHub</div>
+      </a>
+
+      <a href="https://github.com/KhandelwalTapan7/AirQualityProject" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-wind"></i></div>
+          <span class="proj-badge badge-gh">GitHub</span>
+        </div>
+        <div class="proj-title">Air Quality Prediction</div>
+        <div class="proj-desc">ML model predicting the Air Quality Index across Indian cities. Trained on real environmental datasets with feature engineering and regression.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">ML</span><span class="proj-tag">Python</span><span class="proj-tag">Data Science</span><span class="proj-tag">Prediction</span>
+        </div>
+        <div class="proj-link"><i class="fab fa-github"></i> View on GitHub</div>
+      </a>
+
+      <a href="https://khandelwaltapan7.wixsite.com/the-writing-room-1" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-pen-fancy"></i></div>
+          <span class="proj-badge badge-web">Website</span>
+        </div>
+        <div class="proj-title">The Writing Room</div>
+        <div class="proj-desc">Creative writing platform and community built on Wix — a space for writers to share, collaborate, and grow their craft together.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Wix</span><span class="proj-tag">Web Design</span><span class="proj-tag">Community</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Website</div>
+      </a>
+
+      <a href="https://khandelwaltapan7.wixsite.com/bhukkad" target="_blank" class="project-card">
+        <div class="proj-top">
+          <div class="proj-icon"><i class="fas fa-utensils"></i></div>
+          <span class="proj-badge badge-web">Website</span>
+        </div>
+        <div class="proj-title">Bhukkad Restaurant</div>
+        <div class="proj-desc">Full restaurant website with menu, ordering information, and reservation features. Demonstrates UI/UX sensibility beyond the ML stack.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Wix</span><span class="proj-tag">E-commerce</span><span class="proj-tag">Restaurant</span>
+        </div>
+        <div class="proj-link"><i class="fas fa-external-link-alt"></i> Visit Website</div>
+      </a>
+
     </div>
 
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <canvas id="particlesCanvas"></canvas>
+    <div style="text-align:center; margin-top:36px;">
+      <a href="https://github.com/KhandelwalTapan7?tab=repositories" target="_blank" class="btn btn-outline">
+        <i class="fab fa-github"></i> See more on GitHub
+      </a>
     </div>
+  </div>
+</section>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="#home" class="logo">
-                <span class="logo-text">TK</span>
-                <div class="logo-glow"></div>
-            </a>
-            <div class="nav-links">
-                <a href="#home" class="nav-link"><span class="link-text">Home</span></a>
-                <a href="#about" class="nav-link"><span class="link-text">About</span></a>
-                <a href="#experience" class="nav-link"><span class="link-text">Experience</span></a>
-                <a href="#projects" class="nav-link"><span class="link-text">Projects</span></a>
-                <a href="#certificates" class="nav-link"><span class="link-text">Certificates</span></a>
-                <a href="#skills" class="nav-link"><span class="link-text">Skills</span></a>
-                <a href="#contact" class="nav-link"><span class="link-text">Contact</span></a>
-            </div>
-            <div class="nav-actions">
-                <button class="menu-toggle" id="menuToggle">
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </button>
-            </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-label">04 — Skills</div>
+    <h2 class="sec-title">Technical <em>Stack</em></h2>
+    <div class="skills-grid reveal">
+
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-code"></i> Programming</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">C#</span>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="greeting animate-text">
-                        <span class="greeting-text">Hello, I'm</span>
-                        <div class="greeting-line"></div>
-                    </div>
-                    <h1 class="hero-title">
-                        <span class="title-line animate-title">TAPAN</span>
-                        <span class="title-line animate-title delay-1">KHANDELWAL</span>
-                    </h1>
-                    <h2 class="hero-subtitle">
-                        <span class="typing-text"></span>
-                        <span class="cursor"></span>
-                    </h2>
-                    <p class="hero-description">
-                        Building intelligent AI solutions with Machine Learning, Deep Learning, NLP, and Generative AI.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn primary-btn">
-                            <span class="btn-text">View Projects</span>
-                            <div class="btn-glow"></div>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                        <a href="#contact" class="btn secondary-btn">
-                            <span class="btn-text">Contact Me</span>
-                            <div class="btn-glow"></div>
-                        </a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <div class="stat-number" data-count="2">0</div>
-                            <div class="stat-label">Internships</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number" data-count="8">0</div>
-                            <div class="stat-label">Projects</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number" data-count="15">0</div>
-                            <div class="stat-label">Technologies</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="ai-animation">
-                        <div class="neural-network">
-                            <div class="node node-1"></div>
-                            <div class="node node-2"></div>
-                            <div class="node node-3"></div>
-                            <div class="node node-4"></div>
-                            <div class="node node-5"></div>
-                            <div class="connection"></div>
-                            <div class="connection"></div>
-                            <div class="connection"></div>
-                            <div class="connection"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-                <span class="scroll-text">Scroll Down</span>
-            </div>
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-brain"></i> AI / ML</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Deep Learning</span>
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">Generative AI</span>
+          <span class="skill-tag">LLMs</span>
+          <span class="skill-tag">Computer Vision</span>
         </div>
-    </section>
+      </div>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">About</span>
-                    <span class="title-highlight">Me</span>
-                </h2>
-                <div class="section-subtitle">AI/ML Engineer & Developer</div>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <div class="about-bio">
-                        <h3>Building Intelligent Solutions</h3>
-                        <p>Results-driven AI/ML Engineer with expertise in machine learning, deep learning, natural language processing (NLP), and large language models (LLMs). Skilled in developing AI applications, building predictive models, and deploying advanced AI-driven solutions.</p>
-                        <p>Experienced in working with Generative AI technologies, including model fine-tuning and optimization. Demonstrates strong commitment to leveraging AI for innovative solutions across various domains.</p>
-                    </div>
-                    <div class="about-info">
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="info-content">
-                                <h4>Education</h4>
-                                <p>B.Tech Computer Science (AI/ML Specialization)</p>
-                                <p class="info-detail">Jagannath University, Jaipur</p>
-                            </div>
-                        </div>
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="info-content">
-                                <h4>Location</h4>
-                                <p>Jaipur, Rajasthan</p>
-                                <p class="info-detail">India</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-info-small">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>khandelwaltapan7@gmail.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+91 9982866695</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="tech-bubbles">
-                        <div class="bubble python">Python</div>
-                        <div class="bubble ml">ML</div>
-                        <div class="bubble dl">DL</div>
-                        <div class="bubble nlp">NLP</div>
-                        <div class="bubble ai">AI</div>
-                    </div>
-                </div>
-            </div>
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-layer-group"></i> Frameworks</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Keras</span>
+          <span class="skill-tag">Hugging Face</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">LangChain</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">Professional</span>
-                    <span class="title-highlight">Experience</span>
-                </h2>
-            </div>
-            <div class="timeline">
-                <div class="timeline-line"></div>
-                <div class="timeline-item left">
-                    <div class="timeline-dot">
-                        <div class="dot-glow"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">June 2025 - Present</div>
-                        <h3 class="timeline-title">Technical Project Executive Intern</h3>
-                        <h4 class="timeline-company">Cognus Technology, Jaipur</h4>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>Designed and deployed AI-driven solutions improving client operational efficiency</li>
-                                <li>Utilized advanced algorithms to automate complex data workflows</li>
-                                <li>Developed adaptive AI models for real-time decision-making</li>
-                                <li>Continuously optimized business processes through machine learning</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-dot">
-                        <div class="dot-glow"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">July 2024 - Aug 2024</div>
-                        <h3 class="timeline-title">Machine Learning Developer Intern</h3>
-                        <h4 class="timeline-company">Igeeks Technology, Bangalore</h4>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>Developed and deployed machine learning models with Python</li>
-                                <li>Worked with R&D Team on Machine Learning projects</li>
-                                <li>Integrated AI models into cloud-based platforms</li>
-                                <li>Optimized decision-making processes with real-world datasets</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-server"></i> Web & Backend</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">React</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">Featured</span>
-                    <span class="title-highlight">Projects</span>
-                </h2>
-                <div class="section-subtitle">Real-world AI Applications & Web Solutions</div>
-            </div>
-            <div class="projects-grid">
-                <!-- Live Web Apps -->
-                <a href="https://ai-powered-sentiment-analysis-7q5k.onrender.com/" target="_blank" class="project-card live">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">LIVE</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">AI Sentiment Analysis</h3>
-                    <p class="project-description">
-                        Real-time sentiment analysis platform for customer interactions with advanced AI algorithms.
-                    </p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>NLP</span>
-                        <span>AI</span>
-                        <span>Render</span>
-                    </div>
-                    <div class="project-link">
-                        <span>Visit Live App</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-
-                <a href="https://ai-based-student-chatbot.onrender.com/" target="_blank" class="project-card live">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">LIVE</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">AI Student Chatbot</h3>
-                    <p class="project-description">
-                        Intelligent chatbot for student query assistance using machine learning and NLP.
-                    </p>
-                    <div class="project-tech">
-                        <span>NLP</span>
-                        <span>Chatbot</span>
-                        <span>ML</span>
-                        <span>Python</span>
-                    </div>
-                    <div class="project-link">
-                        <span>Visit Live App</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-
-                <!-- GitHub Projects -->
-                <a href="https://github.com/KhandelwalTapan7/NutriAi" target="_blank" class="project-card github">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-apple-alt"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">GITHUB</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">NutriAI</h3>
-                    <p class="project-description">
-                        AI-powered nutrition analysis and meal planning system for personalized diet recommendations.
-                    </p>
-                    <div class="project-tech">
-                        <span>AI</span>
-                        <span>Python</span>
-                        <span>ML</span>
-                        <span>Health</span>
-                    </div>
-                    <div class="project-link">
-                        <span>View on GitHub</span>
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-
-                <a href="https://github.com/KhandelwalTapan7/AirQualityProject" target="_blank" class="project-card github">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-wind"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">GITHUB</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Air Quality Prediction</h3>
-                    <p class="project-description">
-                        Machine learning model for predicting air quality index across different regions in India.
-                    </p>
-                    <div class="project-tech">
-                        <span>ML</span>
-                        <span>Python</span>
-                        <span>Data Science</span>
-                        <span>Prediction</span>
-                    </div>
-                    <div class="project-link">
-                        <span>View on GitHub</span>
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-
-                <!-- Wix Websites -->
-                <a href="https://khandelwaltapan7.wixsite.com/the-writing-room-1" target="_blank" class="project-card website">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-pen-fancy"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">WEBSITE</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">The Writing Room</h3>
-                    <p class="project-description">
-                        A creative writing platform and community for writers to share and collaborate on projects.
-                    </p>
-                    <div class="project-tech">
-                        <span>Wix</span>
-                        <span>Web Design</span>
-                        <span>Content</span>
-                        <span>Community</span>
-                    </div>
-                    <div class="project-link">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-
-                <a href="https://khandelwaltapan7.wixsite.com/bhukkad" target="_blank" class="project-card website">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <div class="project-badge">
-                            <span class="badge-text">WEBSITE</span>
-                            <div class="badge-glow"></div>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Bhukkad Restaurant</h3>
-                    <p class="project-description">
-                        Restaurant website with menu, ordering system, and reservation features built with Wix.
-                    </p>
-                    <div class="project-tech">
-                        <span>Wix</span>
-                        <span>E-commerce</span>
-                        <span>Food</span>
-                        <span>Restaurant</span>
-                    </div>
-                    <div class="project-link">
-                        <span>Visit Website</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    <div class="project-glow"></div>
-                </a>
-            </div>
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-tools"></i> DevOps & Tools</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Render</span>
+          <span class="skill-tag">Jupyter</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Linux</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Certificates Section -->
-    <section id="certificates" class="certificates-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">Internship</span>
-                    <span class="title-highlight">Certificates</span>
-                </h2>
-                <div class="section-subtitle">Click on certificates to view/download</div>
-            </div>
-            <div class="certificates-grid">
-                <!-- Cognus Certificate -->
-                <div class="certificate-card" data-certificate="cognus">
-                    <div class="certificate-preview">
-                        <div class="certificate-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <div class="certificate-glow"></div>
-                    </div>
-                    <div class="certificate-content">
-                        <h3>Technical Project Executive</h3>
-                        <p class="certificate-company">Cognus Technology</p>
-                        <div class="certificate-details">
-                            <div class="detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>Jun 2025 - Dec 2025</span>
-                            </div>
-                            <div class="detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Jaipur</span>
-                            </div>
-                            <div class="detail">
-                                <i class="fas fa-clock"></i>
-                                <span>6 Months</span>
-                            </div>
-                        </div>
-                        <p class="certificate-desc">
-                            Successfully completed internship programme exposed to different project verticals. Recognized for being punctual, hardworking, and inquisitive.
-                        </p>
-                        <button class="btn view-certificate-btn" data-pdf="https://drive.google.com/file/d/your-cognus-pdf-link/view">
-                            <span>View Certificate</span>
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Igeeks Certificate -->
-                <div class="certificate-card" data-certificate="igeek">
-                    <div class="certificate-preview">
-                        <div class="certificate-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="certificate-glow"></div>
-                    </div>
-                    <div class="certificate-content">
-                        <h3>Machine Learning Developer</h3>
-                        <p class="certificate-company">IGEEKS TECHNOLOGY</p>
-                        <div class="certificate-details">
-                            <div class="detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>Jul 2024 - Aug 2024</span>
-                            </div>
-                            <div class="detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Bangalore</span>
-                            </div>
-                            <div class="detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1 Month</span>
-                            </div>
-                        </div>
-                        <p class="certificate-desc">
-                            Worked with R&D Team in Machine Learning with Python. Recognized for consistent progress and technical skills.
-                        </p>
-                        <button class="btn view-certificate-btn" data-pdf="https://drive.google.com/file/d/your-igeek-pdf-link/view">
-                            <span>View Certificate</span>
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <div class="skill-cat">
+        <div class="skill-cat-header"><i class="fas fa-database"></i> Data</div>
+        <div class="skill-tags-wrap">
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">SQL</span>
         </div>
-    </section>
+      </div>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">Technical</span>
-                    <span class="title-highlight">Skills</span>
-                </h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="category-header">
-                        <i class="fas fa-code"></i>
-                        <h3>Programming</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">C</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="category-header">
-                        <i class="fas fa-brain"></i>
-                        <h3>AI/ML</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Machine Learning</span>
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">NLP</span>
-                        <span class="skill-tag">Generative AI</span>
-                        <span class="skill-tag">LLM</span>
-                        <span class="skill-tag">Computer Vision</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="category-header">
-                        <i class="fas fa-tools"></i>
-                        <h3>Frameworks</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">OpenCV</span>
-                        <span class="skill-tag">Hugging Face</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="category-header">
-                        <i class="fas fa-cloud"></i>
-                        <h3>Web & Tools</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Wix</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-text">Get In</span>
-                    <span class="title-highlight">Touch</span>
-                </h2>
-                <div class="section-subtitle">Let's discuss AI projects and opportunities</div>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <a href="mailto:khandelwaltapan7@gmail.com">khandelwaltapan7@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Phone</h4>
-                            <a href="tel:+919982866695">+91 9982866695</a>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Location</h4>
-                            <p>Jaipur, Rajasthan, India</p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://github.com/KhandelwalTapan7" target="_blank" class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/tapan-khandelwal" target="_blank" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="mailto:khandelwaltapan7@gmail.com" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                        <div class="input-line"></div>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
-                        <div class="input-line"></div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Subject" required>
-                        <div class="input-line"></div>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Message" rows="5" required></textarea>
-                        <div class="input-line"></div>
-                    </div>
-                    <button type="submit" class="btn primary-btn submit-btn">
-                        <span>Send Message</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <span>TK</span>
-                </div>
-                <p class="footer-text">
-                    "The best way to predict the future is to invent it." — Alan Kay
-                </p>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#certificates">Certificates</a>
-                    <a href="#contact">Contact</a>
-                </div>
-              
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top -->
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-        <div class="arrow-glow"></div>
-    </button>
-
-    <!-- Certificate Modal -->
-    <div class="modal" id="certificateModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Certificate</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="certificate-viewer">
-                    <div class="pdf-viewer" id="pdfViewer">
-                        <!-- PDF will be embedded here -->
-                    </div>
-                    <div class="certificate-actions">
-                        <a href="#" class="btn primary-btn" id="downloadBtn" target="_blank">
-                            <i class="fas fa-download"></i>
-                            Download PDF
-                        </a>
-                        <a href="#" class="btn secondary-btn" id="viewOriginalBtn" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                            View Original
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+  </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="script.js"></script>
-    <script src="animations.js"></script>
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <div class="container">
+    <div class="sec-label">05 — Certificates</div>
+    <h2 class="sec-title">Certifications & <em>Credentials</em></h2>
+    <div class="certs-grid reveal">
+
+      <div class="cert-card">
+        <div class="cert-icon-wrap"><i class="fas fa-award"></i></div>
+        <div class="cert-role">Technical Project Executive</div>
+        <div class="cert-company">Cognus Technology, Jaipur</div>
+        <div class="cert-meta">
+          <span class="cert-meta-item"><i class="fas fa-calendar"></i> Jun 2025 – Dec 2025</span>
+          <span class="cert-meta-item"><i class="fas fa-clock"></i> 6 Months</span>
+          <span class="cert-meta-item"><i class="fas fa-map-marker-alt"></i> Jaipur</span>
+        </div>
+        <p class="cert-desc">Completed the internship programme across multiple project verticals. Recognized for being punctual, hardworking, and inquisitive with consistent contribution to AI-driven solutions.</p>
+        <a href="assets/certificates/cognus-certificate.pdf" target="_blank" class="btn btn-outline" style="font-size:.82rem; padding:8px 16px;">
+          <i class="fas fa-eye"></i> View Certificate
+        </a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon-wrap"><i class="fas fa-code"></i></div>
+        <div class="cert-role">Machine Learning Developer</div>
+        <div class="cert-company">Igeeks Technology, Bangalore</div>
+        <div class="cert-meta">
+          <span class="cert-meta-item"><i class="fas fa-calendar"></i> Jul 2024 – Aug 2024</span>
+          <span class="cert-meta-item"><i class="fas fa-clock"></i> 1 Month</span>
+          <span class="cert-meta-item"><i class="fas fa-map-marker-alt"></i> Bangalore</span>
+        </div>
+        <p class="cert-desc">Worked with the R&D Team on Machine Learning with Python. Recognized for consistent technical progress and contribution to real-world ML projects and data workflows.</p>
+        <a href="assets/certificates/igeek-certificate.pdf" target="_blank" class="btn btn-outline" style="font-size:.82rem; padding:8px 16px;">
+          <i class="fas fa-eye"></i> View Certificate
+        </a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon-wrap"><i class="fas fa-brain"></i></div>
+        <div class="cert-role">Artificial Intelligence — Training Completion</div>
+        <div class="cert-company">Krutanic Solutions, Bengaluru</div>
+        <div class="cert-meta">
+          <span class="cert-meta-item"><i class="fas fa-calendar"></i> January 2026</span>
+          <span class="cert-meta-item"><i class="fas fa-certificate"></i> AICTE / MSME Recognized</span>
+        </div>
+        <p class="cert-desc">Successfully completed a structured training program in Artificial Intelligence, covering core AI concepts and practical application, certified by Krutanic Solutions.</p>
+        <a href="assets/certificates/training_certificate_demo_vknkst.jpg" target="_blank" class="btn btn-outline" style="font-size:.82rem; padding:8px 16px;">
+          <i class="fas fa-eye"></i> View Certificate
+        </a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon-wrap"><i class="fas fa-certificate"></i></div>
+        <div class="cert-role">AI–ML Assessment — Moderate Level</div>
+        <div class="cert-company">Silicon Institute of Technology (B2Cie™)</div>
+        <div class="cert-meta">
+          <span class="cert-meta-item"><i class="fas fa-calendar"></i> 29 Jun 2026</span>
+          <span class="cert-meta-item"><i class="fas fa-star"></i> Grade: Excellent</span>
+        </div>
+        <p class="cert-desc">Successfully completed the AI–ML (Limited) Assessment at Moderate level, conducted online via B2Cie™, achieving a grade of Excellent.</p>
+        <a href="assets/certificates/Certificate_Tapan_Khandelwal_34653_20260629_105942.pdf" target="_blank" class="btn btn-outline" style="font-size:.82rem; padding:8px 16px;">
+          <i class="fas fa-eye"></i> View Certificate
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-label">06 — Contact</div>
+    <h2 class="sec-title">Let's <em>Connect</em></h2>
+    <div class="contact-grid reveal">
+      <div class="contact-left">
+        <h3>Open to Opportunities</h3>
+        <p>I'm actively looking for <strong>Python Developer</strong> and AI/ML Engineer roles where I can build and ship production-grade systems. Whether you have a question, a project idea, or a job opportunity — reach out, I reply fast.</p>
+        <div class="contact-items">
+          <a href="mailto:khandelwaltapan7@gmail.com" class="contact-item">
+            <i class="fas fa-envelope"></i> khandelwaltapan7@gmail.com
+          </a>
+          <a href="tel:+919982866695" class="contact-item">
+            <i class="fas fa-phone"></i> +91 99828 66695
+          </a>
+          <span class="contact-item" style="cursor:default;">
+            <i class="fas fa-map-marker-alt"></i> Jaipur, Rajasthan, India
+          </span>
+        </div>
+        <div class="social-row">
+          <a href="https://github.com/KhandelwalTapan7" target="_blank" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/tapan-khandelwal-20664b249/" target="_blank" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="mailto:khandelwaltapan7@gmail.com" class="social-btn" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-field">
+          <label>YOUR NAME</label>
+          <input type="text" placeholder="Tapan Khandelwal" required>
+        </div>
+        <div class="form-field">
+          <label>EMAIL</label>
+          <input type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-field">
+          <label>SUBJECT</label>
+          <input type="text" placeholder="Opportunity / Collaboration / Hi!" required>
+        </div>
+        <div class="form-field">
+          <label>MESSAGE</label>
+          <textarea rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Designed & built by <a href="https://github.com/KhandelwalTapan7" target="_blank">Tapan Khandelwal</a> · 2025 &nbsp;·&nbsp; Open to AI/ML roles</p>
+    <p style="margin-top:6px; font-size:.75rem; color:#4c5a7a;">"The best way to predict the future is to invent it." — Alan Kay</p>
+  </div>
+</footer>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+<div id="toast">Message sent! I'll get back to you soon ✓</div>
+
+<script>
+/* ── STARFIELD ── */
+(function(){
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let stars = [];
+  function resize(){ c.width = innerWidth; c.height = innerHeight; }
+  function init(){
+    stars = [];
+    for(let i=0;i<160;i++){
+      stars.push({
+        x: Math.random()*c.width,
+        y: Math.random()*c.height,
+        r: Math.random()*1.4+0.2,
+        a: Math.random(),
+        speed: Math.random()*0.004+0.001
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.a += s.speed;
+      ctx.globalAlpha = 0.3+0.5*Math.abs(Math.sin(s.a));
+      ctx.fillStyle = '#818cf8';
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{ resize(); init(); });
+  resize(); init(); draw();
+})();
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY>60);
+  document.getElementById('btt').classList.toggle('visible', scrollY>400);
+});
+
+/* ── MOBILE MENU ── */
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+/* ── TYPEWRITER ── */
+(function(){
+  const roles = [
+    'Python Developer',
+    'AI/ML Engineer',
+    'Deep Learning Developer',
+    'NLP Practitioner',
+    'Generative AI Builder'
+  ];
+  let ri=0, ci=0, del=false;
+  const el = document.getElementById('typedRole');
+  function tick(){
+    const role = roles[ri];
+    if(!del){
+      ci++;
+      el.textContent = role.slice(0,ci)+'|';
+      if(ci===role.length){ del=true; setTimeout(tick,1800); return; }
+    } else {
+      ci--;
+      el.textContent = role.slice(0,ci)+'|';
+      if(ci===0){ del=false; ri=(ri+1)%roles.length; }
+    }
+    setTimeout(tick, del?60:90);
+  }
+  tick();
+})();
+
+/* ── COUNT UP ── */
+function countUp(id,target,duration){
+  const el = document.getElementById(id);
+  let start=0, step=target/(duration/16);
+  const t = setInterval(()=>{
+    start+=step;
+    if(start>=target){ el.textContent=target; clearInterval(t); return; }
+    el.textContent = Math.floor(start);
+  },16);
+}
+setTimeout(()=>{
+  countUp('s1',2,1000);
+  countUp('s2',9,1200);
+  countUp('s3',4,1400);
+},600);
+
+/* ── REVEAL ── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── FORM ── */
+function handleSubmit(e){
+  e.preventDefault();
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),3500);
+  e.target.reset();
+}
+</script>
 </body>
 </html>
